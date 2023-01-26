@@ -4,16 +4,9 @@
   "type": "module",
   "keywords": [
     "svelte",
-    "component",
-    "canvas",
-    "image",
-    "pan",
-    "zoom",
-    "touch",
-    "gesture",
-    "deep zoom",
-    "pyramid",
-    "tiles"
+    "action",
+    "signature",
+    "svg"
   ],
   "files": [
     "dist"
