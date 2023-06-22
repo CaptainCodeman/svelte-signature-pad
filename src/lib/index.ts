@@ -1,4 +1,4 @@
-import { getStroke } from 'perfect-freehand'
+import { getStroke } from './perfect-freehand'
 import { cubicInOut } from 'svelte/easing'
 import { getSvgPathFromStroke } from './svg-path'
 
