@@ -1,11 +1,10 @@
-import { getStroke } from 'perfect-freehand'
+import { getStroke, type StrokeOptions } from 'perfect-freehand'
 import { cubicInOut } from 'svelte/easing'
 import { getSvgPathFromStroke } from './svg-path'
 
 const linear = (t: number) => t
 
-// TODO: pass in / allow overriding
-const strokeOptions = {
+const defaultStrokeOptions: StrokeOptions = {
   size: 8,
   thinning: 0.7,
   smoothing: 0.4,
@@ -25,14 +24,15 @@ const strokeOptions = {
 
 interface Options {
   ondraw: (path: string) => void
-  oncomplete: (path: string) => void
+	oncomplete: (path: string) => void
+	strokeOptions?: StrokeOptions
 }
 
 export function signature(node: HTMLElement, options: Options) {
   const points: number[][] = []
 
   function render(complete: boolean) {
-    const stroke = getStroke(points, strokeOptions)
+    const stroke = getStroke(points, options.strokeOptions ?? defaultStrokeOptions)
     const path = getSvgPathFromStroke(stroke)
     if (complete) {
       options.oncomplete(path)
