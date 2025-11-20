@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { signature } from '$lib'
 
-	let layers: { path: string; width: number; height: number }[] = []
+	let layers: { path: string; width: number; height: number }[] = $state([])
 
-	let width: number
-	let height: number
-	let preview: string
+	let width = $state(0)
+	let height = $state(0)
+	let preview = $state<string>()
 
 	const ondraw = (path: string) => (preview = path)
 	const oncomplete = (path: string) => {
@@ -19,13 +21,13 @@
 </script>
 
 <div class="relative w-full h-[360px] bg-gray-100 border border-dashed border-gray-300">
-	<div class="absolute left-4 right-4 bottom-24 border-t border-dotted border-gray-300" />
+	<div class="absolute left-4 right-4 bottom-24 border-t border-dotted border-gray-300"></div>
 	<div
 		class="w-full h-full"
 		use:signature={{ ondraw, oncomplete }}
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		on:touchmove|preventDefault={() => false}
+		ontouchmove={preventDefault(() => false)}
 	>
 		{#each layers as layer}
 			<svg class="absolute w-full h-full fill-black pointer-events-none" viewBox="0 0 {layer.width} {layer.height}">
@@ -39,7 +41,7 @@
 			</svg>
 		{/if}
 	</div>
-	<button class="absolute top-2 right-2 px-4 py-2 text-sm text-gray-500 bg-white border border-gray-200" on:click={clear}>Clear</button>
+	<button class="absolute top-2 right-2 px-4 py-2 text-sm text-gray-500 bg-white border border-gray-200" onclick={clear}>Clear</button>
 </div>
 
 <p class="mt-2 text-sm">Please sign on the dotted line to indicate that you agree to all the legal terms we all know you didn't read. Thank you!</p>

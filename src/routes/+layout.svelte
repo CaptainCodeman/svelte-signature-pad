@@ -1,5 +1,10 @@
-<script>
+<script lang="ts">
 	import '../app.postcss'
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <main class="m-4 select-none touch-none overscroll-none">
@@ -10,6 +15,6 @@
 			href="https://github.com/steveruizok/perfect-freehand">perfect-freehand</a
 		>
 		library.
-		<slot />
 	</p>
+	{@render children?.()}
 </main>
