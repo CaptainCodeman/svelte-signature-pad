@@ -12,17 +12,19 @@ Import action into page and pass and object with `ondraw` and `oncomplete` metho
 
 Each will receive a path which can be rendered as SVG in your component. `ondraw` fires _while the user is drawing_ and would be the current stroke. `oncomplete` fires when they have finished the line (which could transition to a different color).
 
+The stroke options can be override if desired.
+
 ## Example
 
 ```svelte
 <script lang="ts">
   import { signature } from 'svelte-signature-pad'
 
-  let layers: { path: string; width: number; height: number }[] = []
+  let layers: { path: string; width: number; height: number }[] = $state([])
 
-  let width: number
-  let height: number
-  let preview: string
+  let width = $state(0)
+  let height = $state(0)
+  let preview = $state<string>()
 
   const ondraw = (path: string) => (preview = path)
   const oncomplete = (path: string) => {
@@ -36,13 +38,13 @@ Each will receive a path which can be rendered as SVG in your component. `ondraw
 </script>
 
 <div class="relative w-full h-[360px] bg-gray-100 border border-dashed border-gray-300">
-  <div class="absolute left-4 right-4 bottom-24 border-t border-dotted border-gray-300" />
+  <div class="absolute left-4 right-4 bottom-24 border-t border-dotted border-gray-300"></div>
   <div
     class="w-full h-full"
     use:signature={{ ondraw, oncomplete }}
     bind:clientWidth={width}
     bind:clientHeight={height}
-    on:touchmove|preventDefault={() => false}
+    ontouchmove={e => e.preventDefault()}
   >
     {#each layers as layer}
       <svg class="absolute w-full h-full fill-black pointer-events-none" viewBox="0 0 {layer.width} {layer.height}">
@@ -56,7 +58,7 @@ Each will receive a path which can be rendered as SVG in your component. `ondraw
       </svg>
     {/if}
   </div>
-  <button class="absolute top-2 right-2 px-4 py-2 text-sm text-gray-500 bg-white border border-gray-200" on:click={clear}>Clear</button>
+  <button class="absolute top-2 right-2 px-4 py-2 text-sm text-gray-500 bg-white border border-gray-200" onclick={clear}>Clear</button>
 </div>
 
 <p class="mt-2 text-sm">Please sign on the dotted line to indicate that you agree to all the legal terms we all know you didn't read. Thank you!</p>
