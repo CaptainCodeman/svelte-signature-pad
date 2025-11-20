@@ -9,6 +9,10 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
+
+		alias: {
+			'svelte-signature-pad': 'src/lib'
+		}
 	},
 }
 

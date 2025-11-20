@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { preventDefault } from 'svelte/legacy';
-
-	import { signature } from '$lib'
+	import { signature } from 'svelte-signature-pad'
 
 	let layers: { path: string; width: number; height: number }[] = $state([])
 
@@ -27,7 +25,7 @@
 		use:signature={{ ondraw, oncomplete }}
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		ontouchmove={preventDefault(() => false)}
+		ontouchmove={e => e.preventDefault()}
 	>
 		{#each layers as layer}
 			<svg class="absolute w-full h-full fill-black pointer-events-none" viewBox="0 0 {layer.width} {layer.height}">
