@@ -1,6 +1,6 @@
 {
   "name": "svelte-signature-pad",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "keywords": [
     "svelte",
@@ -23,7 +23,7 @@
   "homepage": "https://captaincodeman.github.io/svelte-signature-pad/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/captaincodeman/svelte-signature-pad.git"
+    "url": "git+https://github.com/captaincodeman/svelte-signature-pad.git"
   },
   "author": {
     "name": "Simon Green",
